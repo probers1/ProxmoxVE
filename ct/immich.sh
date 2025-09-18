@@ -62,8 +62,7 @@ function update_script() {
     msg_ok "Image-processing libraries up to date"
   fi
   RELEASE="1.142.1"
-  if true; then
-  #if check_for_gh_release "immich" "immich-app/immich" "${RELEASE}"; then
+  if check_for_gh_release "immich" "immich-app/immich" "${RELEASE}"; then
     msg_info "Stopping Services"
     systemctl stop immich-web
     systemctl stop immich-ml
