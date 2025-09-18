@@ -16,7 +16,8 @@ update_os
 setup_uv
 
 msg_info "Installing dependencies"
-$STD apt install --no-install-recommends -y \
+$STD apt-get update
+$STD apt-get install --no-install-recommends -y \
   git \
   redis \
   autoconf \
@@ -46,12 +47,11 @@ $STD apt install --no-install-recommends -y \
   libjpeg-dev \
   liblqr-1-0 \
   libltdl7 \
-  libmimalloc2.0 \
+  libmimalloc3 \
   libopenjp2-7 \
   meson \
   ninja-build \
   pkg-config \
-  cpanminus \
   mesa-utils \
   mesa-va-drivers \
   mesa-vulkan-drivers \
@@ -267,7 +267,7 @@ SOURCE=$SOURCE_DIR/imagemagick
 $STD git clone https://github.com/ImageMagick/ImageMagick.git "$SOURCE"
 cd "$SOURCE"
 $STD git reset --hard "$IMAGEMAGICK_REVISION"
-$STD ./configure --with-modules
+$STD ./configure --with-modules CPPFLAGS="-DMAGICK_LIBRAW_VERSION_TAIL=202502"
 $STD make -j"$(nproc)"
 $STD make install
 ldconfig /usr/local/lib
