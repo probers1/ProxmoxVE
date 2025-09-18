@@ -160,15 +160,20 @@ EOF
     cd "$SRC_DIR"/machine-learning
     mkdir -p "$ML_DIR"
     export VIRTUAL_ENV="${ML_DIR}"/ml-venv
-    if [[ -f ~/.openvino ]]; then
-      msg_info "Updating HW-accelerated machine-learning"
-      $STD /usr/local/bin/uv sync --extra openvino --no-cache --active
-      patchelf --clear-execstack "${VIRTUAL_ENV}/lib/python3.11/site-packages/onnxruntime/capi/onnxruntime_pybind11_state.cpython-311-x86_64-linux-gnu.so"
-      msg_ok "Updated HW-accelerated machine-learning"
+    if [[ -f ~/.cuda_enabled ]]; then
+    msg_info "Updating HW-accelerated machine-learning (CUDA)"
+    # This command installs python dependencies with CUDA support
+    $STD /usr/local/bin/uv sync --extra cuda --no-cache --active
+    msg_ok "Updated HW-accelerated machine-learning (CUDA)"
+    elif [[ -f ~/.openvino ]]; then
+    msg_info "Updating HW-accelerated machine-learning (OpenVINO)"
+    $STD /usr/local/bin/uv sync --extra openvino --no-cache --active
+    patchelf --clear-execstack "${VIRTUAL_ENV}/lib/python3.11/site-packages/onnxruntime/capi/onnxruntime_pybind11_state.cpython-311-x86_64-linux-gnu.so"
+    msg_ok "Updated HW-accelerated machine-learning (OpenVINO)"
     else
-      msg_info "Updating machine-learning"
-      $STD /usr/local/bin/uv sync --extra cpu --no-cache --active
-      msg_ok "Updated machine-learning"
+    msg_info "Updating machine-learning (CPU)"
+    $STD /usr/local/bin/uv sync --extra cpu --no-cache --active
+    msg_ok "Updated machine-learning"
     fi
     cd "$SRC_DIR"
     cp -a machine-learning/{ann,immich_ml} "$ML_DIR"
