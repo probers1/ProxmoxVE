@@ -89,6 +89,20 @@ if [[ "$CTTYPE" == "0" ]]; then
 fi
 msg_ok "Dependencies Installed"
 
+read -r -p "${TAB3}Install CUDA dependencies for NVIDIA HW-accelerated machine-learning? y/N " prompt
+if [[ ${prompt,,} =~ ^(y|yes)$ ]]; then
+  msg_info "Installing CUDA dependencies"
+  touch ~/.cuda_enabled
+  # Add NVIDIA's GPG key and repository
+  #curl -fsSL https://developer.download.nvidia.com/compute/cuda/repos/debian12/x86_64/cuda-keyring_1.1-1_all.deb -o /tmp/cuda-keyring.deb
+  #$STD dpkg -i /tmp/cuda-keyring.deb
+  #rm /tmp/cuda-keyring.deb
+  #$STD apt-get update
+  ## Install CUDA Toolkit
+  #$STD apt-get -y install cuda-toolkit
+  #msg_ok "Installed CUDA dependencies"
+fi
+
 read -r -p "${TAB3}Install OpenVINO dependencies for Intel HW-accelerated machine-learning? y/N " prompt
 if [[ ${prompt,,} =~ ^(y|yes)$ ]]; then
   msg_info "Installing OpenVINO dependencies"
@@ -328,13 +342,17 @@ msg_ok "Installed Immich Server and Web Components"
 cd "$SRC_DIR"/machine-learning
 mkdir -p "$ML_DIR"
 export VIRTUAL_ENV="${ML_DIR}/ml-venv"
-if [[ -f ~/.openvino ]]; then
-  msg_info "Installing HW-accelerated machine-learning"
+if [[ -f ~/.cuda_enabled ]]; then
+  msg_info "Installing HW-accelerated machine-learning (CUDA)"
+  $STD uv sync --extra cuda --no-cache --active
+  msg_ok "Installed HW-accelerated machine-learning (CUDA)"
+elif [[ -f ~/.openvino ]]; then
+  msg_info "Installing HW-accelerated machine-learning (OpenVINO)"
   $STD uv sync --extra openvino --no-cache --active
   patchelf --clear-execstack "${VIRTUAL_ENV}/lib/python3.11/site-packages/onnxruntime/capi/onnxruntime_pybind11_state.cpython-311-x86_64-linux-gnu.so"
-  msg_ok "Installed HW-accelerated machine-learning"
+  msg_ok "Installed HW-accelerated machine-learning (OpenVINO)"
 else
-  msg_info "Installing machine-learning"
+  msg_info "Installing machine-learning (CPU)"
   $STD uv sync --extra cpu --no-cache --active
   msg_ok "Installed machine-learning"
 fi
