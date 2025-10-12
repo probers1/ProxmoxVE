@@ -47,7 +47,6 @@ $STD apt-get install --no-install-recommends -y \
   libjpeg-dev \
   liblqr-1-0 \
   libltdl7 \
-  libmimalloc3 \
   libopenjp2-7 \
   meson \
   ninja-build \
