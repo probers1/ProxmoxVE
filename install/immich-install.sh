@@ -55,6 +55,7 @@ $STD apt-get install --no-install-recommends -y \
   libltdl7 \
   libmimalloc2.0 \
   libopenjp2-7 \
+  libvips-dev \
   meson \
   ninja-build \
   pkg-config \
