@@ -47,7 +47,6 @@ $STD apt install --no-install-recommends -y \
   liblqr-1-0 \
   libltdl7 \
   libopenjp2-7 \
-  libvips-dev \
   meson \
   ninja-build \
   pkg-config \
