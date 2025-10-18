@@ -333,7 +333,7 @@ export SHARP_IGNORE_GLOBAL_LIBVIPS=true
 $STD pnpm --filter immich  build
 unset SHARP_IGNORE_GLOBAL_LIBVIPS
 export SHARP_FORCE_GLOBAL_LIBVIPS=true
-$STD pnpm --filter immich  --prod --no-optional deploy "$APP_DIR"
+$STD pnpm --filter immich --frozen-lockfile --prod --no-optional --strict-peer-dependencies=false deploy "$APP_DIR"
 cp "$APP_DIR"/package.json "$APP_DIR"/bin
 sed -i 's|^start|./start|' "$APP_DIR"/bin/immich-admin
 
@@ -348,7 +348,7 @@ cp -a web/build "$APP_DIR"/www
 cp LICENSE "$APP_DIR"
 
 # cli build
-$STD pnpm --filter @immich/sdk --filter @immich/cli  install
+$STD pnpm --filter @immich/sdk --filter @immich/cli --frozen-lockfile install
 $STD pnpm --filter @immich/sdk --filter @immich/cli build
 $STD pnpm --filter @immich/cli --prod --no-optional deploy "$APP_DIR"/cli
 
