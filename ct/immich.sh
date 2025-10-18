@@ -138,7 +138,7 @@ EOF
     $STD pnpm --filter immich --frozen-lockfile build
     unset SHARP_IGNORE_GLOBAL_LIBVIPS
     export SHARP_FORCE_GLOBAL_LIBVIPS=true
-    $STD pnpm --filter immich --frozen-lockfile --prod --no-optional --legacy-peer-deps deploy "$APP_DIR"
+    $STD pnpm --filter immich --frozen-lockfile --prod --no-optional deploy "$APP_DIR"
     cp "$APP_DIR"/package.json "$APP_DIR"/bin
     sed -i 's|^start|./start|' "$APP_DIR"/bin/immich-admin
 
