@@ -51,11 +51,12 @@ $STD apt-get install --no-install-recommends -y \
   libexpat1 \
   libgcc-s1 \
   libgomp1 \
+  libjpeg-dev \
+  libwebp-dev \
   liblqr-1-0 \
   libltdl7 \
   libmimalloc2.0 \
   libopenjp2-7 \
-  libvips-dev \
   meson \
   ninja-build \
   pkg-config \
@@ -280,7 +281,7 @@ msg_ok "(4/5) Compiled imagemagick"
 msg_info "(5/5) Compiling libvips"
 SOURCE=$SOURCE_DIR/libvips
 # : "${LIBVIPS_REVISION:=$(jq -cr '.revision' $BASE_DIR/server/sources/libvips.json)}"
-: "${LIBVIPS_REVISION:=8fa37a64547e392d3808eed8d72adab7e02b3d00}"
+: "${LIBVIPS_REVISION:=v8.17.3}"
 $STD git clone https://github.com/libvips/libvips.git "$SOURCE"
 cd "$SOURCE"
 $STD git reset --hard "$LIBVIPS_REVISION"
