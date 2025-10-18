@@ -281,7 +281,7 @@ msg_ok "(4/5) Compiled imagemagick"
 msg_info "(5/5) Compiling libvips"
 SOURCE=$SOURCE_DIR/libvips
 # : "${LIBVIPS_REVISION:=$(jq -cr '.revision' $BASE_DIR/server/sources/libvips.json)}"
-: "${LIBVIPS_REVISION:=v8.17.3}"
+: "${LIBVIPS_REVISION:=0b9ea3a62477f670421868337dfaf13e8aa9d754}"
 $STD git clone https://github.com/libvips/libvips.git "$SOURCE"
 cd "$SOURCE"
 $STD git reset --hard "$LIBVIPS_REVISION"
