@@ -322,22 +322,22 @@ export SHARP_IGNORE_GLOBAL_LIBVIPS=true
 echo "Installing dependencies with pnpm... (This is the crucial step)"
 # This command creates the shared node_modules structure that 'deploy' needs.
 $STD pnpm install
-$STD pnpm --filter immich  build
+$STD pnpm --filter immich --frozen-lockfile build
 unset SHARP_IGNORE_GLOBAL_LIBVIPS
 export SHARP_FORCE_GLOBAL_LIBVIPS=true
-$STD pnpm --filter immich  --prod --no-optional deploy "$APP_DIR"
+$STD pnpm --filter immich --frozen-lockfile --prod --no-optional --strict-peer-dependencies=false deploy "$APP_DIR"
 cp "$APP_DIR"/package.json "$APP_DIR"/bin
 sed -i 's|^start|./start|' "$APP_DIR"/bin/immich-admin
 
 # openapi & web build
 cd "$SRC_DIR"
-$STD pnpm --filter @immich/sdk --filter immich-web  --force install
+$STD pnpm --filter @immich/sdk --filter immich-web --frozen-lockfile --force install
 $STD pnpm --filter @immich/sdk --filter immich-web build
 cp -a web/build "$APP_DIR"/www
 cp LICENSE "$APP_DIR"
 
 # cli build
-$STD pnpm --filter @immich/sdk --filter @immich/cli  install
+$STD pnpm --filter @immich/sdk --filter @immich/cli --frozen-lockfile install
 $STD pnpm --filter @immich/sdk --filter @immich/cli build
 $STD pnpm --filter @immich/cli --prod --no-optional deploy "$APP_DIR"/cli
 msg_ok "Installed Immich Server and Web Components"
