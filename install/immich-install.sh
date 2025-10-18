@@ -94,13 +94,13 @@ if [[ ${prompt,,} =~ ^(y|yes)$ ]]; then
   msg_info "Installing CUDA dependencies"
   touch ~/.cuda_enabled
   # Add NVIDIA's GPG key and repository
-  #curl -fsSL https://developer.download.nvidia.com/compute/cuda/repos/debian12/x86_64/cuda-keyring_1.1-1_all.deb -o /tmp/cuda-keyring.deb
-  #$STD dpkg -i /tmp/cuda-keyring.deb
-  #rm /tmp/cuda-keyring.deb
-  #$STD apt-get update
+  curl -fsSL https://developer.download.nvidia.com/compute/cuda/repos/debian12/x86_64/cuda-keyring_1.1-1_all.deb -o /tmp/cuda-keyring.deb
+  $STD dpkg -i /tmp/cuda-keyring.deb
+  rm /tmp/cuda-keyring.deb
+  $STD apt-get update
   ## Install CUDA Toolkit
-  #$STD apt-get -y install cuda-toolkit
-  #msg_ok "Installed CUDA dependencies"
+  $STD apt-get -y install cuda-toolkit
+  msg_ok "Installed CUDA dependencies"
 fi
 
 read -r -p "${TAB3}Install OpenVINO dependencies for Intel HW-accelerated machine-learning? y/N " prompt
