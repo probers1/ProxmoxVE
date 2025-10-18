@@ -319,6 +319,9 @@ corepack enable
 
 # server build
 export SHARP_IGNORE_GLOBAL_LIBVIPS=true
+echo "Installing dependencies with pnpm... (This is the crucial step)"
+# This command creates the shared node_modules structure that 'deploy' needs.
+$STD pnpm install
 $STD pnpm --filter immich  build
 unset SHARP_IGNORE_GLOBAL_LIBVIPS
 export SHARP_FORCE_GLOBAL_LIBVIPS=true
