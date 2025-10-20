@@ -73,8 +73,8 @@ function update_script() {
     APP_DIR="${INSTALL_DIR}/app"
     ML_DIR="${APP_DIR}/machine-learning"
     GEO_DIR="${INSTALL_DIR}/geodata"
-    VCHORD_RELEASE="0.4.3"
-    # VCHORD_RELEASE="$(curl -fsSL https://api.github.com/repos/tensorchord/vectorchord/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }')"
+    # VCHORD_RELEASE="0.4.3"
+    VCHORD_RELEASE="$(curl -fsSL https://api.github.com/repos/tensorchord/vectorchord/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }')"
 
     if [[ ! -f ~/.vchord_version ]] || [[ "$VCHORD_RELEASE" != "$(cat ~/.vchord_version)" ]]; then
       msg_info "Updating VectorChord"
