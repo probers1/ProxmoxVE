@@ -165,10 +165,10 @@ EOF
 
     # server build
     export SHARP_IGNORE_GLOBAL_LIBVIPS=true
-    $STD pnpm --filter immich  build
+    $STD pnpm --filter immich --frozen-lockfile build
     unset SHARP_IGNORE_GLOBAL_LIBVIPS
     export SHARP_FORCE_GLOBAL_LIBVIPS=true
-    $STD pnpm --filter immich  --prod --no-optional deploy "$APP_DIR"
+    $STD pnpm --filter immich --frozen-lockfile --prod --no-optional deploy "$APP_DIR"
     cp "$APP_DIR"/package.json "$APP_DIR"/bin
     sed -i 's|^start|./start|' "$APP_DIR"/bin/immich-admin
 
@@ -183,7 +183,7 @@ EOF
     cp LICENSE "$APP_DIR"
 
     # cli build
-    $STD pnpm --filter @immich/sdk --filter @immich/cli  install
+    $STD pnpm --filter @immich/sdk --filter @immich/cli --frozen-lockfile install
     $STD pnpm --filter @immich/sdk --filter @immich/cli build
     $STD pnpm --filter @immich/cli --prod --no-optional deploy "$APP_DIR"/cli
     cd "$APP_DIR"
@@ -216,9 +216,9 @@ EOF
       patchelf --clear-execstack "${VIRTUAL_ENV}/lib/python3.11/site-packages/onnxruntime/capi/onnxruntime_pybind11_state.cpython-311-x86_64-linux-gnu.so"
     msg_ok "Updated HW-accelerated machine-learning (OpenVINO)"
     else
-    msg_info "Updating machine-learning (CPU)"
-    $STD /usr/local/bin/uv sync --extra cpu --no-cache --active
-    msg_ok "Updated machine-learning"
+      msg_info "Updating machine-learning"
+      $STD sudo --preserve-env=VIRTUAL_ENV -nu immich uv sync --extra cpu --active -n -p python3.11 --managed-python
+      msg_ok "Updated machine-learning"
     fi
     cd "$SRC_DIR"
     cp -a machine-learning/{ann,immich_ml} "$ML_DIR"
