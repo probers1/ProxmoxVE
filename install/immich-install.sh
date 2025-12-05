@@ -85,6 +85,13 @@ if [[ "$CTTYPE" == "0" && -d /dev/dri ]]; then
 fi
 msg_ok "Dependencies Installed"
 
+msg_info "Installing Mise"
+curl -fSs https://mise.jdx.dev/gpg-key.pub | tee /etc/apt/keyrings/mise-archive-keyring.pub 1>/dev/null
+echo "deb [signed-by=/etc/apt/keyrings/mise-archive-keyring.pub arch=amd64] https://mise.jdx.dev/deb stable main" | tee /etc/apt/sources.list.d/mise.list
+$STD apt update
+$STD apt install -y mise
+msg_ok "Installed Mise"
+
 read -r -p "${TAB3}Install CUDA dependencies for NVIDIA HW-accelerated machine-learning? y/N " prompt
 if [[ ${prompt,,} =~ ^(y|yes)$ ]]; then
   msg_info "Installing CUDA dependencies"
@@ -333,7 +340,7 @@ export SHARP_IGNORE_GLOBAL_LIBVIPS=true
 $STD pnpm --filter immich  build
 unset SHARP_IGNORE_GLOBAL_LIBVIPS
 export SHARP_FORCE_GLOBAL_LIBVIPS=true
-$STD pnpm --filter immich --frozen-lockfile --prod --no-optional --strict-peer-dependencies=false deploy "$APP_DIR"
+$STD pnpm --filter immich --frozen-lockfile --prod --no-optional deploy "$APP_DIR"
 cp "$APP_DIR"/package.json "$APP_DIR"/bin
 sed -i 's|^start|./start|' "$APP_DIR"/bin/immich-admin
 
@@ -378,8 +385,8 @@ elif [[ -f ~/.openvino ]]; then
   patchelf --clear-execstack "${VIRTUAL_ENV}/lib/python3.11/site-packages/onnxruntime/capi/onnxruntime_pybind11_state.cpython-311-x86_64-linux-gnu.so"
   msg_ok "Installed HW-accelerated machine-learning (OpenVINO)"
 else
-  msg_info "Installing machine-learning (CPU)"
-  $STD uv sync --extra cpu --no-cache --active
+  msg_info "Installing machine-learning"
+  $STD sudo --preserve-env=VIRTUAL_ENV -nu immich uv sync --extra cpu --active -n -p python3.11 --managed-python
   msg_ok "Installed machine-learning"
 fi
 cd "$SRC_DIR"
