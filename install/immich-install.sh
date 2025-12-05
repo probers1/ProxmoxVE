@@ -21,7 +21,7 @@ $STD apt install --no-install-recommends -y \
   redis \
   autoconf \
   build-essential \
-  python3-dev \
+  python3.11-dev \
   automake \
   cmake \
   jq \
@@ -84,27 +84,6 @@ if [[ "$CTTYPE" == "0" && -d /dev/dri ]]; then
   $STD adduser "$(id -u -n)" render
 fi
 msg_ok "Dependencies Installed"
-
-msg_info "Installing Mise"
-curl -fSs https://mise.jdx.dev/gpg-key.pub | tee /etc/apt/keyrings/mise-archive-keyring.pub 1>/dev/null
-echo "deb [signed-by=/etc/apt/keyrings/mise-archive-keyring.pub arch=amd64] https://mise.jdx.dev/deb stable main" | tee /etc/apt/sources.list.d/mise.list
-$STD apt update
-$STD apt install -y mise
-msg_ok "Installed Mise"
-
-read -r -p "${TAB3}Install CUDA dependencies for NVIDIA HW-accelerated machine-learning? y/N " prompt
-if [[ ${prompt,,} =~ ^(y|yes)$ ]]; then
-  msg_info "Installing CUDA dependencies"
-  touch ~/.cuda_enabled
-  # Add NVIDIA's GPG key and repository
-  curl -fsSL https://developer.download.nvidia.com/compute/cuda/repos/debian12/x86_64/cuda-keyring_1.1-1_all.deb -o /tmp/cuda-keyring.deb
-  $STD dpkg -i /tmp/cuda-keyring.deb
-  rm /tmp/cuda-keyring.deb
-  $STD apt-get update
-  ## Install CUDA Toolkit
-  $STD apt-get -y install cuda-toolkit
-  msg_ok "Installed CUDA dependencies"
-fi
 
 msg_info "Installing Mise"
 curl -fSs https://mise.jdx.dev/gpg-key.pub | tee /etc/apt/keyrings/mise-archive-keyring.pub 1>/dev/null
