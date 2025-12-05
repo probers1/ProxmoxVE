@@ -21,7 +21,7 @@ $STD apt install --no-install-recommends -y \
   redis \
   autoconf \
   build-essential \
-  python3.11-dev \
+  python3-dev \
   automake \
   cmake \
   jq \
