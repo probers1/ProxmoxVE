@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-source <(curl -fsSL https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/misc/build.func)
+source <(curl -fsSL https://raw.githubusercontent.com/probers1/ProxmoxVE/main/misc/build.func)
 # Copyright (c) 2021-2025 community-scripts ORG
 # Author: rrole
 # License: MIT | https://github.com/community-scripts/ProxmoxVE/raw/main/LICENSE
@@ -33,9 +33,9 @@ function update_script() {
         msg_info "Stopping service"
         systemctl stop wanderer-web
         msg_ok "Stopped service"
-        
+
 				fetch_and_deploy_gh_release "wanderer" "Flomp/wanderer"  "tarball" "latest" "/opt/wanderer/source"
-				
+
         msg_info "Updating wanderer"
         cd /opt/wanderer/source/db
         $STD go mod tidy

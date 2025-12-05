@@ -94,7 +94,7 @@ df -h
 
 **Simplest form:**
 ```bash
-var_hostname=myserver bash -c "$(curl -fsSL https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/debian.sh)"
+var_hostname=myserver bash -c "$(curl -fsSL https://raw.githubusercontent.com/probers1/ProxmoxVE/main/ct/debian.sh)"
 ```
 
 ### Complete Configuration Example

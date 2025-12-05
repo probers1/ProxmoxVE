@@ -87,7 +87,7 @@ git switch -c your-feature-branch
 
 ### 4. Change paths in build.func install.func and AppName.sh
 To be able to develop from your own branch you need to change:\
-`https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main`\
+`https://raw.githubusercontent.com/probers1/ProxmoxVE/main`\
 to\
 `https://raw.githubusercontent.com/[USER]/[REPOSITORY]/refs/heads/[BRANCH]`\
  in following files:
@@ -125,5 +125,3 @@ Open a Pull Request from your feature branch to the main branch on the Dev repos
 - [CT Template: AppName.sh](https://github.com/community-scripts/ProxmoxVE/blob/main/.github/CONTRIBUTOR_AND_GUIDES/ct/AppName.sh)
 - [Install Template: AppName-install.sh](https://github.com/community-scripts/ProxmoxVE/blob/main/.github/CONTRIBUTOR_AND_GUIDES/install/AppName-install.sh)
 - [JSON Template: AppName.json](https://github.com/community-scripts/ProxmoxVE/blob/main/.github/CONTRIBUTOR_AND_GUIDES/json/AppName.json)
-
-

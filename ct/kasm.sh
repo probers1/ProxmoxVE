@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-source <(curl -fsSL https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/misc/build.func)
+source <(curl -fsSL https://raw.githubusercontent.com/probers1/ProxmoxVE/main/misc/build.func)
 # Copyright (c) 2021-2025 community-scripts ORG
 # Author: Omar Minaya
 # License: MIT | https://github.com/community-scripts/ProxmoxVE/raw/main/LICENSE
@@ -43,7 +43,7 @@ function update_script() {
   msg_info "Removing outdated docker-compose plugin"
   [ -f ~/.docker/cli-plugins/docker-compose ] && rm -rf ~/.docker/cli-plugins/docker-compose
   msg_ok "Removed outdated docker-compose plugin"
-  
+
   if [[ -z "$CURRENT_VERSION" ]] || [[ "$KASM_VERSION" != "$CURRENT_VERSION" ]]; then
     msg_info "Updating Kasm"
     cd /tmp
@@ -62,13 +62,13 @@ function update_script() {
     tar -xf "kasm_release_${KASM_VERSION}.tar.gz"
     chmod +x /tmp/kasm_release/install.sh
     rm -f /tmp/kasm_release_${KASM_VERSION}.tar.gz
-  
+
     bash /tmp/kasm_release/upgrade.sh --proxy-port 443
     rm -rf /tmp/kasm_release
     msg_ok "Updated Successfully"
   else
     msg_ok "No update required. Kasm is already at v${KASM_VERSION}"
-  
+
   fi
   exit
 }
