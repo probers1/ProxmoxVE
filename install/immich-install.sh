@@ -356,7 +356,7 @@ mkdir -p "$ML_DIR" && chown -R immich:immich "$INSTALL_DIR"
 export VIRTUAL_ENV="${ML_DIR}/ml-venv"
 if [[ -f ~/.cuda_enabled ]]; then
   msg_info "Installing HW-accelerated machine-learning (CUDA)"
-  $STD sudo --preserve-env=VIRTUAL_ENV -nu immich uv sync --extra cuda --no-cache --active -n -p python3.11 --managed-python
+  $STD sudo --preserve-env=VIRTUAL_ENV -nu immich uv sync --extra cuda --active -n -p python3.11 --managed-python
   patchelf --clear-execstack "${VIRTUAL_ENV}/lib/python3.11/site-packages/onnxruntime/capi/onnxruntime_pybind11_state.cpython-311-x86_64-linux-gnu.so"
   msg_ok "Installed HW-accelerated machine-learning (CUDA)"
 elif [[ -f ~/.openvino ]]; then
